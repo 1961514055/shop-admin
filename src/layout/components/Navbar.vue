@@ -5,7 +5,7 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-      <div class="right-menu-item">{{userInfoStore.name}}</div>
+      <div class="right-menu-item">{{ userInfoStore.name }}</div>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img v-if="userInfoStore.avatar" :src="userInfoStore.avatar" class="user-avatar">
@@ -19,19 +19,19 @@
               <el-dropdown-item>首页</el-dropdown-item>
             </router-link>
             <el-dropdown-item divided @click="logout">
-              <span style="display:block;">退出登陆</span>
+              <span style="display:block;">退出登录</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
-      </el-dropdown> 
+      </el-dropdown>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'Navbar'
-  }
+export default {
+  name: 'Navbar'
+}
 </script>
 
 <script lang="ts" setup>
@@ -64,7 +64,7 @@ const logout = async () => {
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
 
   .hamburger-container {
     line-height: 46px;
@@ -72,7 +72,7 @@ const logout = async () => {
     float: left;
     cursor: pointer;
     transition: background .3s;
-    -webkit-tap-highlight-color:transparent;
+    -webkit-tap-highlight-color: transparent;
 
     &:hover {
       background: rgba(0, 0, 0, .025)

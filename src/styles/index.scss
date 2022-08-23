@@ -4,6 +4,10 @@
 @import './element-ui.scss';
 @import './sidebar.scss';
 
+* {
+  margin: 0;
+  left: 0;
+}
 body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;
