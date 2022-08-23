@@ -58,7 +58,7 @@ service.interceptors.response.use(
 			}
 			return Promise.reject(service.interceptors.response);
 		} else {
-			console.log('res--成功之后返回的数据--->', res.data);
+			
       return res.data; /* 返回成功响应数据中的data属性数据 */
 		}
 	},

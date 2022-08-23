@@ -13,6 +13,7 @@ export const useUserInfoStore = defineStore('userInfo', {
 
 	state: (): UserInfoState => ({
     token: getToken() as string,
+    // token: '',
     name: '',
     avatar: '',
     menuRoutes: []

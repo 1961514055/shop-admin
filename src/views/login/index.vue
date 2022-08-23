@@ -129,7 +129,7 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
-  background-image: url(../../assets/bg.jpg);
+  background-image: url(../../assets/bg.);
   background-color: #2d3a4b;
   background-size: cover;
 
