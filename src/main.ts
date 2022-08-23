@@ -20,3 +20,14 @@ app.use(pinia)
     locale: zhCn,
   })
   .mount('#app')
+
+
+  // 测试登录
+  import userInfo from '@/api/userInfo'
+
+  // 调用登录接口
+  async function fn(){
+    const result = await userInfo.login({username:'admin',password:'111111'})    
+  }
+
+  fn()

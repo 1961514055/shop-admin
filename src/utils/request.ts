@@ -1,4 +1,4 @@
-import axios, { type AxiosResponse } from 'axios';
+import axios, { type AxiosResponse , type AxiosRequestConfig,type AxiosRequestHeaders} from 'axios';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import pinia from '@/stores/index';
 import { useUserInfoStore } from '../stores/userInfo';
@@ -19,7 +19,16 @@ const service = axios.create({
 // 添加请求拦截器
 service.interceptors.request.use(
 	(config) => {
-    
+		// 如果有token应该携带上token
+    const userInfoStore = useUserInfoStore();
+		// 去仓库中获取token的值
+		const token = userInfoStore.token
+		console.log('req---token--->',token);
+		
+		if(token){
+			// 如果存在则将token的值赋值给请求头
+			(config.headers as AxiosRequestHeaders).token = token
+		}
 		return config;
 	}
 );
@@ -49,6 +58,7 @@ service.interceptors.response.use(
 			}
 			return Promise.reject(service.interceptors.response);
 		} else {
+			console.log('res--成功之后返回的数据--->', res.data);
       return res.data; /* 返回成功响应数据中的data属性数据 */
 		}
 	},
