@@ -51,11 +51,11 @@ async function users(){
 users()
 
 // 测试登出
-// async function out() {
-//   const result = await userInfo.loginOut('eyJhbGciOiJIUzUxMiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAKtWKi5NUrJSSkzJzcxT0lFKrShQsjI0MzM0MrU0sTCoBQAEClaGIAAAAA.5FXLOtzYXMpnoJ7AvC95z62xIk5F2bgr5id8OiAHOnt6MuZraGknLMnTrZdxsVaSgV9R-rflZfn-8TbZ2gU6Tw');
-//   console.log('登出成功111111');
+async function out() {
+  const result = await userInfo.loginOut('eyJhbGciOiJIUzUxMiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAKtWKi5NUrJSSkzJzcxT0lFKrShQsjI0MzM0MrU0sTCoBQAEClaGIAAAAA.5FXLOtzYXMpnoJ7AvC95z62xIk5F2bgr5id8OiAHOnt6MuZraGknLMnTrZdxsVaSgV9R-rflZfn-8TbZ2gU6Tw');
+  console.log('登出成功111111');
   
-// }
+}
 
-// out()
+out()
 
