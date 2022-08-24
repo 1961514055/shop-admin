@@ -13,6 +13,15 @@ interface tokenModel{
   token:string
 }
 
+// 定义info返回的类型
+interface infoModel{
+  avatar:string,
+  buttons:string[],
+  name:string,
+  roles:string[],
+  routes:string[]
+}
+
 
 
 // 登录
@@ -24,14 +33,14 @@ export default {
 // 获取用户信息
 // GET /admin/acl/index/info
   info(){
-    return request.get(`/admin/acl/index/info`)
+    return request.get<any,infoModel>(`/admin/acl/index/info`)
   },
   
 
   //登出
   // POST 
   loginOut(token:string){
-    return request.post('/admin/acl/index/logout',token)
+    return request.post<any,null>('/admin/acl/index/logout',token)
   }
 }
 

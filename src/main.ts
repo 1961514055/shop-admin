@@ -40,7 +40,7 @@ async function fn(){
   console.log('仓库---',userInfoStore.token);
     
 }
-// fn()
+fn()
 
 // 测试用户信息
 async function users(){
