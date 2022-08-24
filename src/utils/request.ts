@@ -22,9 +22,7 @@ service.interceptors.request.use(
 		// 如果有token应该携带上token
     const userInfoStore = useUserInfoStore();
 		// 去仓库中获取token的值
-		const token = userInfoStore.token
-		console.log('req---token--->',token);
-		
+		const token = userInfoStore.token		
 		if(token){
 			// 如果存在则将token的值赋值给请求头
 			(config.headers as AxiosRequestHeaders).token = token

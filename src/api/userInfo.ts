@@ -14,7 +14,7 @@ interface tokenModel{
 }
 
 // 定义info返回的类型
-interface infoModel{
+export interface infoModel{
   avatar:string,
   buttons:string[],
   name:string,

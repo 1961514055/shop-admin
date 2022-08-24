@@ -11,8 +11,8 @@ import type { RouteRecordRaw } from 'vue-router';
 /**
  * 静态路由（默认路由）
  */
- export const staticRoutes: Array<RouteRecordRaw> = [
-	{
+export const staticRoutes: Array<RouteRecordRaw> = [
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/login/index.vue'),
@@ -38,20 +38,63 @@ import type { RouteRecordRaw } from 'vue-router';
       path: 'home',
       name: 'Home',
       component: () => import('@/views/home/index.vue'),
-      meta: { 
-        title: '首页', 
-        icon: 'ele-HomeFilled', 
+      meta: {
+        title: '首页',
+        icon: 'ele-HomeFilled',
       }
     }]
   },
+  {
+    path: '/product',
+    component: () => import('@/layout/index.vue'),
+    children: [
+      {
+        path: 'trademark/list',
+        component: () => import('@/views/product/trademark/index.vue'),
+        meta: {
+          title: '品牌管理',
+
+        }
+      },
+      {
+        path: 'attr/list',
+        component: () => import('@/views/product/attr/index.vue'),
+        meta: {
+          title: '平台属性管理',
+
+        }
+      },
+      {
+        path: 'spu/list',
+        component: () => import('@/views/product/spu/index.vue'),
+        meta: {
+          title: 'Spu管理',
+
+        }
+      },
+      {
+        path: 'sku/list',
+        component: () => import('@/views/product/sku/index.vue'),
+        meta: {
+          title: 'Sku管理',
+
+        }
+      },
+    ],
+    meta: {
+      title: '商品管理',
+      icon: 'ele-GoodsFilled',
+
+    }
+  },
 
   /* 匹配任意的路由 必须最后注册 */
-  { 
-    path: '/:pathMatch(.*)', 
+  {
+    path: '/:pathMatch(.*)',
     name: 'Any',
-    redirect: '/404', 
+    redirect: '/404',
     meta: {
-      hidden: true 
+      hidden: true
     }
   }
 ];
