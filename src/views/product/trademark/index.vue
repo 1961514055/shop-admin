@@ -5,8 +5,8 @@
         <el-button type="primary" :icon="Plus">添加</el-button>
       </div>
     </template>
-    <el-table  border style="width: 100%">
-      <el-table-column prop="date" label="序号" width="180" />
+    <el-table border class="mb-10">
+      <el-table-column prop="date" label="序号" width="180" align="center" />
       <el-table-column prop="name" label="品牌名称" width="180" />
       <el-table-column prop="address" label="品牌Logo" />
       <el-table-column prop="address" label="操作" />
