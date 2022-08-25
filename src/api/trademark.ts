@@ -1,23 +1,41 @@
 import request from '@/utils/request'
 
-// GET /admin/product/baseTrademark/{page}/{limit}  分页
-// POST /admin/product/baseTrademark/save 新增
-//  PUT /admin/product/baseTrademark/update 修改
-// DELETE /admin/product/baseTrademark/remove/{id} 删除
+
+// 定义品牌信息类型
+export interface trademarkModel {
+  id?: number, //品牌id
+  logoUrl: string, //logo图片
+  tmName: string //品牌名称
+}
+
+export type trademarkListModel = trademarkModel[]
+//定义分页返回类型
+export interface pageListModel {
+  current: number, //当前页
+  pages: number, // 总页数
+  records: trademarkModel[], //品牌信息
+  searchCount: boolean,
+  size: number, // 每页记录数
+  total: number //总条数
+}
+
 
 
 export default {
   // 分页 page ：当前页码, limit：每页记录数
-  getPage(page:number, limit:number){
-    return request.get(`/admin/product/baseTrademark/${page}/${limit}`)
+  get(page: number, limit: number) {
+    return request.get<any, pageListModel>(`/admin/product/baseTrademark/${page}/${limit}`)
   },
-  save(){
-    return request.post('/admin/product/baseTrademark/save')
+  // 添加
+  add(data: trademarkModel) {
+    return request.post('/admin/product/baseTrademark/save', data)
   },
-  update(){
-
+  //修改
+  update() {
+    return request.put('/admin/product/baseTrademark/update')
   },
-  remove(){
-
+  // 删除
+  remove(id: number) {
+    return request.delete(`/admin/product/baseTrademark/remove/${id}`)
   }
 }

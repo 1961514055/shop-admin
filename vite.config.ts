@@ -39,9 +39,9 @@ export default defineConfig((mode: ConfigEnv) => {
       },
     },
     server: {
-      host:'0.0.0.0', // 映射多个域名地址
-      port:8000, // 设置端口号
-      open:true, // 设置自动打开浏览器
+      host: '0.0.0.0', // 映射多个域名地址
+      port: 8000, // 设置端口号
+      open: true, // 设置自动打开浏览器
       // 配置跨域代理
       proxy: {
         // 选项写法
