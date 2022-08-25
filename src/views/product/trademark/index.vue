@@ -17,8 +17,8 @@
         </template>
       </el-table-column>
       <el-table-column label="操作">
-        <template #default="scope">
-          <el-button type="warning" :icon="Edit">编辑</el-button>
+        <template #default="{ row, $index }">
+          <el-button type="warning" :icon="Edit" @click="getOneTradeMark(row.id)">编辑</el-button>
           <el-button type="danger" :icon="Delete">删除</el-button>
         </template>
       </el-table-column>
@@ -57,7 +57,7 @@
       <!-- 底部 确定取消按钮 -->
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="onCancelSave">取消</el-button>
+          <el-button @click="onCancelSave(trademarkFormRef)">取消</el-button>
           <el-button type="primary" @click="onSave(trademarkFormRef)">确定</el-button>
         </span>
       </template>
@@ -87,10 +87,12 @@ const limit = ref(3)
 const dialogVisible = ref(false)
 // 存储图片路径
 const imageUrl = ref('')
+
 // 定义表单信息
 const trademarkForm = ref<trademarkModel>({
   tmName: '', //品牌名称
   logoUrl: '', // 图片路径
+  // id?: ''
 })
 
 const trademarkFormRef = ref<FormInstance>()
@@ -137,8 +139,12 @@ const handleCurrentChange = (val: number) => {
 }
 
 // 点击取消 关闭模态框
-const onCancelSave = () => {
+const onCancelSave = (formEl: FormInstance | undefined) => {
+  console.log("点击");
+  if (!formEl) return
+  formEl.resetFields()
   dialogVisible.value = false
+
 }
 
 // 点击保存 发送请求 关闭模态框
@@ -165,7 +171,6 @@ const onSave = async (formEl: FormInstance | undefined) => {
   })
 }
 
-
 // 文件上传成功时的钩子
 
 const handleAvatarSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
@@ -183,6 +188,21 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
     return false
   }
   return true
+}
+
+// 查询单条数据
+const getOneTradeMark = async (id: string) => {
+  console.log("接收到的id---", id);
+  try {
+    const result = await trademarkApi.getOne(id)
+    console.log('查询成功--->', result);
+    // trademarkForm.value.tmName = result.tmName
+    // trademarkForm.value.logoUrl = result.logoUrl
+    // dialogVisible.value = true
+  } catch (error) {
+    ElMessage.error('查询数据失败')
+    Promise.reject(error)
+  }
 }
 </script>
 

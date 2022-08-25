@@ -30,6 +30,12 @@ export default {
   add(data: trademarkModel) {
     return request.post('/admin/product/baseTrademark/save', data)
   },
+  // 查询单条数据一个
+  getOne(id: string) {
+    return request.get<any, trademarkModel>(`/admin/product/baseTrademark/get/${id}`)
+  },
+
+
   //修改
   update() {
     return request.put('/admin/product/baseTrademark/update')
