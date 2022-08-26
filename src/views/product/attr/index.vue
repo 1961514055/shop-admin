@@ -6,10 +6,11 @@
       </div>
     </el-card>
     <el-card class="box-card mt-10">
-      <div class="text item">
+      <!-- 列表展示 -->
+      <div class="text item" v-show="!isEdit">
         <!-- 添加按钮 -->
         <!-- <el-button type="primary" :icon="Plus" size="small" class="mb-10" :disabled="!categoryStore.category3Id ">添加属性 -->
-        <el-button type="primary" :icon="Plus" size="small" class="mb-10">添加属性
+        <el-button type="primary" :icon="Plus" size="small" class="mb-10" @click="isEdit = true">添加属性
         </el-button>
         <!-- 列表表格 -->
         <el-table border style="width: 100%" :data="attrList">
@@ -28,6 +29,43 @@
           </el-table-column>
         </el-table>
       </div>
+      <!-- 编辑模式 -->
+      <div v-show="isEdit">
+        <el-form :inline="true">
+          <el-form-item label="属性名">
+            <el-input placeholder="请输入属性名" v-model="attrForm.attrName" />
+          </el-form-item>
+        </el-form>
+        <el-button type="primary" class="mb-10" :disabled="!attrForm.attrName" size="small" @click="addAttrVal">添加属性值
+        </el-button>
+
+        <!-- 表格 -->
+        <el-table border style="width: 100%" class-name="mb-10" :data="attrForm.attrValueList">
+          <el-table-column label="序号" width="140" type="index" />
+          <el-table-column prop="valueName" label="属性值名称">
+            <template #default="{ row, $index }">
+              <div>{{ row.valueName }}</div>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="操作" width="160">
+            <template #default="{ row, $index }">
+              <el-popconfirm :title="`确定要删除[${row.valueName}]吗`" @confirm="removeAttrVal(row, $index)">
+                <template #reference>
+                  <el-button type="danger" size="small" :icon="Delete"></el-button>
+                </template>
+              </el-popconfirm>
+            </template>
+          </el-table-column>
+
+        </el-table>
+        <!-- 保存按钮 -->
+        <div>
+          <el-button type="primary" :disabled="!(attrForm.attrName && attrForm.attrValueList.length)" @click="onSave">保存
+          </el-button>
+          <el-button>取消</el-button>
+        </div>
+      </div>
     </el-card>
   </div>
 </template>
@@ -36,21 +74,53 @@
 import { ref, watch } from "vue";
 import { Plus, EditPen, Delete } from "@element-plus/icons-vue";
 import { useCategoryStore } from "@/stores/category";
-import type { attrInfoModel, attrInfoListModel } from '@/api/attr'
+import type { attrInfoModel, attrInfoListModel, attrValueModel } from '@/api/attr'
 import attrApi from '@/api/attr'
+import { ElMessage } from "element-plus";
 // 三级分类仓库
 const categoryStore = useCategoryStore()
 // 平台属性  用来展示数据
 const attrList = ref<attrInfoListModel>()
-
-
-
+// 控制编辑页面的展示
+const isEdit = ref(false)
+// 初始化表单数据
+const initAttrForm = () => ({
+  attrName: "",
+  attrValueList: [],
+  categoryId: undefined,
+  categoryLevel: 3
+})
+// 收集数据  新增-修改
+const attrForm = ref<attrInfoModel>(initAttrForm())
 // 查询列表数据
 const getList = async () => {
   const result = await attrApi.getAttrInfoList(categoryStore.category1Id as number, categoryStore.category2Id as number, categoryStore.category3Id as number)
   attrList.value = result
 }
+// 添加属性值
+const addAttrVal = () => {
+  attrForm.value.attrValueList.push({
+    valueName: '测试数据',
+  })
+}
+// 删除新增里面的表格删除
+const removeAttrVal = (row: attrValueModel, index: number) => {
+  attrForm.value.attrValueList.splice(index, 1)
+}
+//  新增保存
+const onSave = () => {
+  // 校验合法性
+  if (!(attrForm.value.attrName && attrForm.value.attrValueList.length)) {
+    ElMessage.error('[属性名] 和[属性值列表] 必须有值')
+    return
+  }
+  try {
+    // 调用接口
+    
+  } catch (error) {
 
+  }
+}
 
 // 监听三级分类 数据变化则调用查询接口
 watch(() => categoryStore.category3Id, (navl) => {
