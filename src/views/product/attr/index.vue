@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import CategorySelector from "../../../components/categorySelector/index.vue";
+import { onMounted } from "vue";
 /**
 分析:
 1. 三级联动 - 用组件去做(全局公用组件)
@@ -29,7 +29,13 @@ import CategorySelector from "../../../components/categorySelector/index.vue";
   2.2 列表展示页
   2.3 新增/编辑页面
 */
-</script>
 
+
+
+
+
+
+</script>
+  
 <style scoped>
 </style>
