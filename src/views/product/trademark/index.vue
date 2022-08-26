@@ -19,7 +19,7 @@
       <el-table-column label="操作">
         <template #default="{ row, $index }">
           <el-button type="warning" :icon="Edit" @click="getOneTradeMark(row.id)">编辑</el-button>
-          <el-button type="danger" :icon="Delete">删除</el-button>
+          <el-button type="danger" :icon="Delete" @click="delTradeMark(row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -92,7 +92,7 @@ const imageUrl = ref('')
 const trademarkForm = ref<trademarkModel>({
   tmName: '', //品牌名称
   logoUrl: '', // 图片路径
-  // id?: ''
+  id: -1
 })
 
 const trademarkFormRef = ref<FormInstance>()
@@ -155,12 +155,20 @@ const onSave = async (formEl: FormInstance | undefined) => {
       console.log('验证通过')
       try {
         // 发送请求
-        const result = trademarkApi.add({ tmName: trademarkForm.value.tmName, logoUrl: trademarkForm.value.logoUrl })
-        console.log('添加成功', result);
-        trademarkForm.value.tmName = ''
-        trademarkForm.value.logoUrl = ''
+        // 根据id是否存在判断是添加还是修改
+        if (trademarkForm.value.id === -1) { //-1代表不存在 走添加
+          const result = trademarkApi.add({ tmName: trademarkForm.value.tmName, logoUrl: trademarkForm.value.logoUrl })
+          console.log('添加成功', result);
+          trademarkForm.value.tmName = ''
+          trademarkForm.value.logoUrl = ''
+        } else {
+          const result = trademarkApi.update({ id: trademarkForm.value.id, tmName: trademarkForm.value.tmName, logoUrl: trademarkForm.value.logoUrl })
+          console.log('修改成功', result);
+          getPage()
+        }
+
       } catch (error) {
-        ElMessage.error('添加失败！')
+        ElMessage.error('失败！')
         Promise.reject(error)
       }
       dialogVisible.value = false
@@ -176,6 +184,7 @@ const onSave = async (formEl: FormInstance | undefined) => {
 const handleAvatarSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
   // 将上传之后的返回的地址给imgurl赋值
   trademarkForm.value.logoUrl = response.data
+  getPage()
 }
 
 // 上传文件之前的钩子
@@ -191,16 +200,29 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 }
 
 // 查询单条数据
-const getOneTradeMark = async (id: string) => {
-  console.log("接收到的id---", id);
+const getOneTradeMark = async (id: number) => {
   try {
     const result = await trademarkApi.getOne(id)
-    console.log('查询成功--->', result);
-    // trademarkForm.value.tmName = result.tmName
-    // trademarkForm.value.logoUrl = result.logoUrl
-    // dialogVisible.value = true
+    trademarkForm.value.tmName = result.tmName
+    trademarkForm.value.logoUrl = result.logoUrl
+    trademarkForm.value.id = result.id
+    console.log('id', trademarkForm.value.id);
+
+    dialogVisible.value = true
   } catch (error) {
     ElMessage.error('查询数据失败')
+    Promise.reject(error)
+  }
+}
+
+// 删除单条信息
+const delTradeMark = async (id: number) => {
+  try {
+    await trademarkApi.remove(id)
+    console.log('删除成功');
+    getPage()
+  } catch (error) {
+    ElMessage.error('删除失败')
     Promise.reject(error)
   }
 }

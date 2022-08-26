@@ -31,17 +31,17 @@ export default {
     return request.post('/admin/product/baseTrademark/save', data)
   },
   // 查询单条数据一个
-  getOne(id: string) {
+  getOne(id: number) {
     return request.get<any, trademarkModel>(`/admin/product/baseTrademark/get/${id}`)
   },
 
 
   //修改
-  update() {
-    return request.put('/admin/product/baseTrademark/update')
+  update(data: trademarkModel) {
+    return request.put<any, null>('/admin/product/baseTrademark/update', data)
   },
   // 删除
   remove(id: number) {
-    return request.delete(`/admin/product/baseTrademark/remove/${id}`)
+    return request.delete<any, null>(`/admin/product/baseTrademark/remove/${id}`)
   }
 }
