@@ -8,9 +8,9 @@ import router from './router'
 import './styles/index.scss'
 import ElSvg from './components/SvgIcon/ElSvg'
 import './permission'
-
+import CategirySelector from '@/components/categorySelector/index.vue'
 const app = createApp(App)
-
+app.component('CategirySelector', CategirySelector)
 
 ElSvg(app)
 

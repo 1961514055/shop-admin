@@ -18,8 +18,8 @@
       </el-table-column>
       <el-table-column label="操作">
         <template #default="{ row, $index }">
-          <el-button type="warning" :icon="Edit" @click="getOneTradeMark(row.id)">编辑</el-button>
-          <el-button type="danger" :icon="Delete" @click="delTradeMark(row.id)">删除</el-button>
+          <el-button type="warning" :icon="Edit" @click="getOneTradeMark(row)">编辑</el-button>
+          <el-button type="danger" :icon="Delete" @click="delTradeMark(row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -29,8 +29,8 @@
       @current-change="handleCurrentChange" />
 
     <!-- 新增按钮 模态框-->
-    <!--  -->
-    <el-dialog v-model="dialogVisible" title="添加品牌">
+    <!-- {trademarkForm.id}?"修改品牌":"新增品牌 -->
+    <el-dialog v-model="dialogVisible" title="新增品牌">
       <!-- 表单 -->
       <el-form ref="trademarkFormRef" label-width="120px" class="demo-dynamic" style="width: 500px;"
         :model="trademarkForm" :rules="rules">
@@ -74,6 +74,7 @@ import type { UploadProps, FormRules, FormInstance } from 'element-plus'
 import trademarkApi from '@/api/trademark'
 import type { trademarkListModel, trademarkModel } from '@/api/trademark'
 import { onMounted, ref, reactive } from 'vue';
+import { cloneDeep } from 'lodash'
 
 // 定义品牌数据
 const trademarkList = ref<trademarkListModel>()
@@ -152,26 +153,22 @@ const onSave = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.validate((valid) => {
     if (valid) {
-      console.log('验证通过')
       try {
         // 发送请求
         // 根据id是否存在判断是添加还是修改
         if (trademarkForm.value.id === -1) { //-1代表不存在 走添加
           const result = trademarkApi.add({ tmName: trademarkForm.value.tmName, logoUrl: trademarkForm.value.logoUrl })
-          console.log('添加成功', result);
           trademarkForm.value.tmName = ''
           trademarkForm.value.logoUrl = ''
         } else {
           const result = trademarkApi.update({ id: trademarkForm.value.id, tmName: trademarkForm.value.tmName, logoUrl: trademarkForm.value.logoUrl })
-          console.log('修改成功', result);
-          getPage()
         }
-
+        getPage()
+        dialogVisible.value = false
       } catch (error) {
         ElMessage.error('失败！')
         Promise.reject(error)
       }
-      dialogVisible.value = false
     } else {
       console.log('验证失败!')
       return false
@@ -184,7 +181,6 @@ const onSave = async (formEl: FormInstance | undefined) => {
 const handleAvatarSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
   // 将上传之后的返回的地址给imgurl赋值
   trademarkForm.value.logoUrl = response.data
-  getPage()
 }
 
 // 上传文件之前的钩子
@@ -199,33 +195,42 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   return true
 }
 
-// 查询单条数据
-const getOneTradeMark = async (id: number) => {
-  try {
-    const result = await trademarkApi.getOne(id)
-    trademarkForm.value.tmName = result.tmName
-    trademarkForm.value.logoUrl = result.logoUrl
-    trademarkForm.value.id = result.id
-    console.log('id', trademarkForm.value.id);
-
-    dialogVisible.value = true
-  } catch (error) {
-    ElMessage.error('查询数据失败')
-    Promise.reject(error)
-  }
+// 点击修改弹框回显数据
+const getOneTradeMark = async (trademark: trademarkModel) => {
+  // 将数据进行深拷贝
+  trademarkForm.value = cloneDeep(trademark)
+  dialogVisible.value = true
 }
 
-// 删除单条信息
-const delTradeMark = async (id: number) => {
+const delTradeMark = async (row: trademarkModel) => {
   try {
-    await trademarkApi.remove(id)
-    console.log('删除成功');
+    const result = await ElMessageBox.confirm(
+      `确认要删除[${row.tmName}]`,
+      '警告',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+    )
+    // 判断当前页面是否只有一条数据，如果是则删除成功后需要页面往前跳转一页
+    if (trademarkList.value?.length === 1 && page.value != 1) {
+      console.log('条数', trademarkList.value?.length);
+
+      page.value -= 1
+      console.log('页数', page.value);
+
+    }
+    // 调用接口
+    await trademarkApi.remove(row.id as number)
+
+    ElMessage.success('删除成功')
     getPage()
   } catch (error) {
-    ElMessage.error('删除失败')
-    Promise.reject(error)
   }
+
 }
+
 </script>
 
 <style scoped>
