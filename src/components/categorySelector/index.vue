@@ -1,5 +1,5 @@
 <template>
-  <el-form :inline="true">
+  <el-form :inline="true" :disabled="props.isEdit">
     <!-- 一级分类 -->
     <el-form-item label="一级分类">
       <el-select placeholder="请选择" v-model="categoryStore.category1Id" @change="changeCategory1Id">
@@ -26,6 +26,7 @@ import { onMounted } from 'vue';
 import { useCategoryStore } from '@/stores/category'
 const categoryStore = useCategoryStore()
 
+const props = defineProps(['isEdit'])
 
 onMounted(() => {
   // 获取一级分类的名字

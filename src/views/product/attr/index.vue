@@ -2,15 +2,16 @@
   <div>
     <el-card class="box-card">
       <div class="text item">
-        <CategorySelector></CategorySelector>
+        <CategorySelector :isEdit="isEdit"></CategorySelector>
       </div>
     </el-card>
     <el-card class="box-card mt-10">
       <!-- 列表展示 -->
       <div class="text item" v-show="!isEdit">
         <!-- 添加按钮 -->
-        <!-- <el-button type="primary" :icon="Plus" size="small" class="mb-10" :disabled="!categoryStore.category3Id ">添加属性 -->
-        <el-button type="primary" :icon="Plus" size="small" class="mb-10" @click="isEdit = true">添加属性
+        <el-button type="primary" :icon="Plus" size="small" class="mb-10" :disabled="!categoryStore.category3Id"
+          @click="isEdit = true">添加属性
+          <!-- <el-button type="primary" :icon="Plus" size="small" class="mb-10" @click="isEdit = true">添加属性 -->
         </el-button>
         <!-- 列表表格 -->
         <el-table border style="width: 100%" :data="attrList">
@@ -23,8 +24,12 @@
           </el-table-column>
           <el-table-column prop="name" label="操作" width="140">
             <template #default="{ row, $index }">
-              <el-button type="warning" size="small" :icon="EditPen"></el-button>
-              <el-button type="danger" size="small" :icon="Delete"></el-button>
+              <el-button type="warning" size="small" :icon="EditPen" @click="editAttr(row)"></el-button>
+              <el-popconfirm :title="`确定要删除[${row.attrName}]吗`" @confirm="removeAttr(row)">
+                <template #reference>
+                  <el-button type="danger" size="small" :icon="Delete"></el-button>
+                </template>
+              </el-popconfirm>
             </template>
           </el-table-column>
         </el-table>
@@ -63,7 +68,7 @@
         <div>
           <el-button type="primary" :disabled="!(attrForm.attrName && attrForm.attrValueList.length)" @click="onSave">保存
           </el-button>
-          <el-button>取消</el-button>
+          <el-button @click="onCancel">取消</el-button>
         </div>
       </div>
     </el-card>
@@ -77,6 +82,7 @@ import { useCategoryStore } from "@/stores/category";
 import type { attrInfoModel, attrInfoListModel, attrValueModel } from '@/api/attr'
 import attrApi from '@/api/attr'
 import { ElMessage } from "element-plus";
+import { cloneDeep } from "lodash";
 // 三级分类仓库
 const categoryStore = useCategoryStore()
 // 平台属性  用来展示数据
@@ -108,20 +114,52 @@ const removeAttrVal = (row: attrValueModel, index: number) => {
   attrForm.value.attrValueList.splice(index, 1)
 }
 //  新增保存
-const onSave = () => {
+const onSave = async () => {
   // 校验合法性
   if (!(attrForm.value.attrName && attrForm.value.attrValueList.length)) {
     ElMessage.error('[属性名] 和[属性值列表] 必须有值')
     return
   }
+  if (!attrForm.value.categoryId) { // 新增是没有这个值的 值为attrForm.value.categoryId == undefind
+    attrForm.value.categoryId = categoryStore.category3Id
+  }
   try {
     // 调用接口
-    
+    const result = await attrApi.save(attrForm.value)
+    ElMessage.success('添加成功')
+    // 关闭当前页面 重置表单页
+    onCancel()
+    // 查询列表数据
+    getList()
   } catch (error) {
-
+    ElMessage.error('添加shibai')
+    Promise.reject(error)
   }
 }
-
+// 取消按钮
+const onCancel = () => {
+  // 重置表单中的值
+  attrForm.value = initAttrForm()
+  // 修改控制编辑页面的展示
+  isEdit.value = false
+}
+// 修改
+const editAttr = (row: attrInfoModel) => {
+  // 拷贝数据
+  attrForm.value = cloneDeep(row)
+  isEdit.value = true
+}
+// 删除
+const removeAttr = async (row: attrInfoModel) => {
+  try {
+    await attrApi.del(row.id as number)
+    ElMessage.success('删除成功')
+    getList() // 查询列表
+  } catch (error) {
+    ElMessage.error('删除失败')
+    Promise.reject(error)
+  }
+}
 // 监听三级分类 数据变化则调用查询接口
 watch(() => categoryStore.category3Id, (navl) => {
   //  如果nval = und = false = 什么也没有  nval = dsa = true = 有值

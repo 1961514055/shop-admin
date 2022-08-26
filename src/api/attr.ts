@@ -23,5 +23,9 @@ export default {
   // 新增 修改
   save(data: attrInfoModel) {
     return request.post<any, null>('/admin/product/saveAttrInfo', data)
+  },
+  // 删除
+  del(attrId: number) {
+    return request.delete<any, null>(`/admin/product/deleteAttr/${attrId}`)
   }
 }
