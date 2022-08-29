@@ -14,12 +14,12 @@
           <!-- <el-button type="primary" :icon="Plus" size="small" class="mb-10" @click="isEdit = true">添加属性 -->
         </el-button>
         <!-- 列表表格 -->
-        <el-table border style="width: 100%" :data="attrList">
+        <el-table border :data="attrList">
           <el-table-column label="序号" width="80" type="index" />
           <el-table-column prop="attrName" label="分类" width="160" />
           <el-table-column prop="name" label="属性值列表">
             <template #default="{ row, $index }">
-              <el-tag class="mr-10" type="success" v-for="attrVal in row.attrValueList">{{ attrVal.valueName }}</el-tag>
+              <el-tag class="mr-10" type="success" v-for="attrVal in row.attrValueList">{{  attrVal.valueName  }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column prop="name" label="操作" width="140">
@@ -45,7 +45,7 @@
         </el-button>
 
         <!-- 表格 -->
-        <el-table border style="width: 100%" class-name="mb-10" :data="attrForm.attrValueList">
+        <el-table border class-name="mb-10" :data="attrForm.attrValueList">
           <el-table-column label="序号" width="140" type="index" />
           <el-table-column prop="valueName" label="属性值名称">
             <template #default="{ row, $index }">
@@ -53,7 +53,7 @@
                 ref="inputRef" @blur="inputBlur(row, $index)">
               </el-input>
 
-              <div v-else @click="inputFocus(row)">{{ row.valueName }}</div>
+              <div v-else @click="inputFocus(row)">{{  row.valueName  }}</div>
             </template>
           </el-table-column>
 

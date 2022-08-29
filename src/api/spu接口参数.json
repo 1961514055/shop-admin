@@ -1,0 +1,312 @@
+// 获取分页参数 - 格式
+{
+  "records": [
+    {
+      "id": 5023,
+      "spuName": "为什么上传的图片显示不出来 ，大佬有空在描述栏解释一下",
+      "description": "图片显示不出来的看过来！是新增imgName和imgUrl，不是imageName和imageUrl，老师写错啦！！！！不用谢我，要就给我转点钱(*^▽^*)：微信收款：0.01元",
+      "category3Id": 61,
+      "tmId": 11175,
+      "spuSaleAttrList": null,
+      "spuImageList": null
+    },
+    {
+      "id": 6,
+      "spuName": "S10 Pro",
+      "description": "产品名称\nS10 Pro\n品牌\nvivo\n首销日期\n以官网信息为准\n入网型号\nV2121A\n上市年份\n2021年\n上市月份\n7月",
+      "category3Id": 61,
+      "tmId": 6,
+      "spuSaleAttrList": null,
+      "spuImageList": null
+    },
+    {
+      "id": 5,
+      "spuName": "VIVO S10",
+      "description": "产品名称\nS10\n品牌\nvivo\n首销日期\n以官网信息为准\n入网型号\nV2121A\n上市年份\n2021年\n上市月份\n7月",
+      "category3Id": 61,
+      "tmId": 6,
+      "spuSaleAttrList": null,
+      "spuImageList": null
+    }
+  ],
+  "total": 7,
+  "size": 3,
+  "current": 1,
+  "searchCount": true,
+  "pages": 3
+}
+// 创建spu的数据
+{
+  "spuName": "兰蔻",
+  "description": "你是个好人",
+  "tmId": 11221,
+  "spuImageList": [],
+  "spuSaleAttrList": [
+    {
+      "baseSaleAttrId": "1",
+      "saleAttrName": "颜色",
+      "spuSaleAttrValueList": [
+        {
+          "saleAttrValueName": "red",
+          "baseSaleAttrId": "1"
+        },
+        {
+          "saleAttrValueName": "blue",
+          "baseSaleAttrId": "1"
+        }
+      ]
+    },
+    {
+      "baseSaleAttrId": "2",
+      "saleAttrName": "版本",
+      "spuSaleAttrValueList": []
+    }
+  ],
+  "category3Id": 61
+}
+
+// 更新spu的数据
+{
+  "id": 3,
+  "spuName": "Apple iPhone 12",
+  "description": "Apple iPhone 12",
+  "category3Id": 61,
+  "tmId": 2,
+  "spuSaleAttrList": [
+    {
+      "id": 5,
+      "spuId": 3,
+      "baseSaleAttrId": 1,
+      "saleAttrName": "颜色",
+      "spuSaleAttrValueList": [
+        {
+          "id": 9,
+          "spuId": 3,
+          "baseSaleAttrId": 1,
+          "saleAttrValueName": "黑色",
+          "saleAttrName": "颜色",
+          "isChecked": null
+        },
+        {
+          "id": 10,
+          "spuId": 3,
+          "baseSaleAttrId": 1,
+          "saleAttrValueName": "红色",
+          "saleAttrName": "颜色",
+          "isChecked": null
+        },
+        {
+          "id": 11,
+          "spuId": 3,
+          "baseSaleAttrId": 1,
+          "saleAttrValueName": "蓝色",
+          "saleAttrName": "颜色",
+          "isChecked": null
+        },
+        {
+          "id": 12,
+          "spuId": 3,
+          "baseSaleAttrId": 1,
+          "saleAttrValueName": "白色",
+          "saleAttrName": "颜色",
+          "isChecked": null
+        }
+      ]
+    }
+  ],
+  "spuImageList": [
+    {
+      "id": 12,
+      "spuId": 3,
+      "imgName": "7155bba4c363065f.jpg",
+      "imgUrl": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWAVRWzAABUiOmA0ic932.jpg",
+      "name": "7155bba4c363065f.jpg",
+      "url": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWAVRWzAABUiOmA0ic932.jpg",
+      "uid": 1661584644999,
+      "status": "success"
+    },
+    {
+      "id": 13,
+      "spuId": 3,
+      "imgName": "2689bc534d570eaf.jpg",
+      "imgUrl": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWAO2oYAAEw9kY2VKk982.jpg",
+      "name": "2689bc534d570eaf.jpg",
+      "url": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWAO2oYAAEw9kY2VKk982.jpg",
+      "uid": 1661584645000,
+      "status": "success"
+    },
+    {
+      "id": 14,
+      "spuId": 3,
+      "imgName": "6ef342197c8095b6.jpg",
+      "imgUrl": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWAJllcAAEY0AkXL8M782.jpg",
+      "name": "6ef342197c8095b6.jpg",
+      "url": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWAJllcAAEY0AkXL8M782.jpg",
+      "uid": 1661584645001,
+      "status": "success"
+    },
+    {
+      "id": 15,
+      "spuId": 3,
+      "imgName": "34c390fe3ab2bab5.jpg",
+      "imgUrl": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWAbqkuAAENKBtJukQ551.jpg",
+      "name": "34c390fe3ab2bab5.jpg",
+      "url": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWAbqkuAAENKBtJukQ551.jpg",
+      "uid": 1661584645002,
+      "status": "success"
+    },
+    {
+      "id": 16,
+      "spuId": 3,
+      "imgName": "7ae59d1d962f0965.jpg",
+      "imgUrl": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWAFeQLAAEt9MLZnho584.jpg",
+      "name": "7ae59d1d962f0965.jpg",
+      "url": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWAFeQLAAEt9MLZnho584.jpg",
+      "uid": 1661584645003,
+      "status": "success"
+    },
+    {
+      "id": 17,
+      "spuId": 3,
+      "imgName": "de33680f921e5838.jpg",
+      "imgUrl": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWASR1YAADsOUYB-2g312.jpg",
+      "name": "de33680f921e5838.jpg",
+      "url": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWASR1YAADsOUYB-2g312.jpg",
+      "uid": 1661584645004,
+      "status": "success"
+    },
+    {
+      "id": 18,
+      "spuId": 3,
+      "imgName": "f73bfe30f5ec641a.jpg",
+      "imgUrl": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWABhwlAAEjBwwVkrI735.jpg",
+      "name": "f73bfe30f5ec641a.jpg",
+      "url": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWABhwlAAEjBwwVkrI735.jpg",
+      "uid": 1661584645005,
+      "status": "success"
+    }
+  ]
+}
+
+// 图片列表
+{
+  "id": 12,
+  "spuId": 3,
+  "imgName": "7155bba4c363065f.jpg",
+  "imgUrl": "http://47.93.148.192:8080/group1/M00/00/02/rBHu8l-rgfWAVRWzAABUiOmA0ic932.jpg"
+}
+// 销售属性列表
+[
+  {
+    "id": 5,
+    "spuId": 3,
+    "baseSaleAttrId": 1,
+    "saleAttrName": "颜色",
+    "spuSaleAttrValueList": [
+      {
+        "id": 9,
+        "spuId": 3,
+        "baseSaleAttrId": 1,
+        "saleAttrValueName": "黑色",
+        "saleAttrName": "颜色",
+        "isChecked": null
+      },
+      {
+        "id": 10,
+        "spuId": 3,
+        "baseSaleAttrId": 1,
+        "saleAttrValueName": "红色",
+        "saleAttrName": "颜色",
+        "isChecked": null
+      },
+      {
+        "id": 11,
+        "spuId": 3,
+        "baseSaleAttrId": 1,
+        "saleAttrValueName": "蓝色",
+        "saleAttrName": "颜色",
+        "isChecked": null
+      },
+      {
+        "id": 12,
+        "spuId": 3,
+        "baseSaleAttrId": 1,
+        "saleAttrValueName": "白色",
+        "saleAttrName": "颜色",
+        "isChecked": null
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "spuId": 3,
+    "baseSaleAttrId": 2,
+    "saleAttrName": "版本",
+    "spuSaleAttrValueList": [
+      {
+        "id": 13,
+        "spuId": 3,
+        "baseSaleAttrId": 2,
+        "saleAttrValueName": "64G",
+        "saleAttrName": "版本",
+        "isChecked": null
+      },
+      {
+        "id": 14,
+        "spuId": 3,
+        "baseSaleAttrId": 2,
+        "saleAttrValueName": "128G",
+        "saleAttrName": "版本",
+        "isChecked": null
+      }
+    ]
+  }
+]
+
+
+
+// 保存spu数据
+
+
+{
+  "category3Id": 61,
+  "description": "性价比高",
+  "spuImageList": [
+    {
+      "imgName": "00.jpg",
+      "imgUrl": "http://47.93.148.192:8080/group1/M00/06/B6/rBHu8mMMFYGAfup5AABD9OLYmoU597.jpg"
+    }
+  ],
+  "spuName": "笔记本",
+  "spuSaleAttrList": [
+    {
+      "baseSaleAttrId": 1,
+      "saleAttrName": "颜色",
+      "spuSaleAttrValueList": [
+        {
+          "baseSaleAttrId": 1,
+          "saleAttrValueName": "red"
+        },
+        {
+          "baseSaleAttrId": 1,
+          "saleAttrValueName": "blue"
+        }
+      ]
+    },
+    {
+      "baseSaleAttrId": 2,
+      "saleAttrName": "版本",
+      "spuSaleAttrValueList": [
+        {
+          "baseSaleAttrId": 2,
+          "saleAttrValueName": "64G"
+        },
+        {
+          "baseSaleAttrId": 2,
+          "saleAttrValueName": "32G"
+        }
+      ]
+    }
+  ],
+  "tmId": 24
+}
