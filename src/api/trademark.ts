@@ -1,5 +1,7 @@
 import request from '@/utils/request'
 
+// 商品管理-品牌管理接口
+
 
 // 定义品牌信息类型
 export interface trademarkModel {

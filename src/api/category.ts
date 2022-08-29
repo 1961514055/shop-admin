@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 
+// 三级联动接口
 
 
 export interface categoryModel {

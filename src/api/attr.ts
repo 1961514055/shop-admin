@@ -1,9 +1,12 @@
 import request from '@/utils/request'
 
+// 商品管理-平台管理属性接口
+
 export interface attrValueModel {
   id?: number,
   attrId?: number,
-  valueName: string
+  valueName: string,
+  inputVisible?: boolean // 定义属性控制input框的可输入和不可输入
 }
 export interface attrInfoModel {
   id?: number,

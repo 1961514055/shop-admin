@@ -49,7 +49,11 @@
           <el-table-column label="序号" width="140" type="index" />
           <el-table-column prop="valueName" label="属性值名称">
             <template #default="{ row, $index }">
-              <div>{{ row.valueName }}</div>
+              <el-input v-model="row.valueName" v-if="row.inputVisible" size="small" clearable type="text"
+                ref="inputRef" @blur="inputBlur(row, $index)">
+              </el-input>
+
+              <div v-else @click="inputFocus(row)">{{ row.valueName }}</div>
             </template>
           </el-table-column>
 
@@ -76,12 +80,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { nextTick, ref, watch } from "vue";
 import { Plus, EditPen, Delete } from "@element-plus/icons-vue";
 import { useCategoryStore } from "@/stores/category";
 import type { attrInfoModel, attrInfoListModel, attrValueModel } from '@/api/attr'
 import attrApi from '@/api/attr'
-import { ElMessage } from "element-plus";
+import { ElMessage, type InputInstance } from "element-plus";
 import { cloneDeep } from "lodash";
 // 三级分类仓库
 const categoryStore = useCategoryStore()
@@ -89,6 +93,9 @@ const categoryStore = useCategoryStore()
 const attrList = ref<attrInfoListModel>()
 // 控制编辑页面的展示
 const isEdit = ref(false)
+// 获取input框元素
+const inputRef = ref<InputInstance>()
+
 // 初始化表单数据
 const initAttrForm = () => ({
   attrName: "",
@@ -106,7 +113,12 @@ const getList = async () => {
 // 添加属性值
 const addAttrVal = () => {
   attrForm.value.attrValueList.push({
-    valueName: '测试数据',
+    valueName: '',
+    inputVisible: true,
+  })
+  // 让input 聚焦
+  nextTick(() => {
+    inputRef.value?.focus()
   })
 }
 // 删除新增里面的表格删除
@@ -159,6 +171,43 @@ const removeAttr = async (row: attrInfoModel) => {
     ElMessage.error('删除失败')
     Promise.reject(error)
   }
+}
+
+// 新增/修改页 input框失焦
+const inputBlur = (row: attrValueModel, index: number) => {
+  // 失焦的时候如果有值则切换展示div中的内容
+  // 如果没有值则把添加的数据干掉
+  if (row.valueName) { // 判断是否为空的
+    // 判断值是否重复
+    const isRepate = attrForm.value.attrValueList.some((item, ind) => {
+      if (ind != index) { // 首先要排除当条数据自己跟自己判断
+        return item.valueName = row.valueName
+      }
+    })
+    if (isRepate) { // 重复
+      ElMessage.error('输入属性值重复！')
+      attrForm.value.attrValueList.splice(index, 1)
+      return
+    }
+
+
+    // 定义属性控制input框的可输入和不可输入
+    row.inputVisible = false // 不可输入
+
+
+  } else {
+    // 删除空的
+    attrForm.value.attrValueList.splice(index, 1)
+  }
+}
+// 聚焦
+const inputFocus = (row: attrValueModel) => { //点击div触发的
+  row.inputVisible = true
+  // 让input 聚焦
+  nextTick(() => {
+    inputRef.value?.focus()
+  })
+
 }
 // 监听三级分类 数据变化则调用查询接口
 watch(() => categoryStore.category3Id, (navl) => {
