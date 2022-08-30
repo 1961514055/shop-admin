@@ -8,8 +8,8 @@
     </el-card>
     <!-- 表格信息 -->
     <el-card class="box-card">
-      <SpuList v-if="showStatus == SPUSTATUS.SPULIST" v-model="showStatus"></SpuList>
-      <SpuForm v-if="showStatus == SPUSTATUS.SPUFORM" v-model="showStatus"></SpuForm>
+      <SpuList v-if="showStatus == SPUSTATUS.SPULIST" v-model="showStatus" @spuInfo="changeSpuInfo"></SpuList>
+      <SpuForm v-if="showStatus == SPUSTATUS.SPUFORM" v-model="showStatus" :spuInfo="spuInfo"></SpuForm>
     </el-card>
   </div>
 </template>
@@ -26,8 +26,26 @@ export enum SPUSTATUS {
 import { ref } from "vue";
 import SpuList from "./SpuList/index.vue";
 import SpuForm from "./SpuForm/index.vue";
+import type { SpuModel } from '@/api/spu'
 // 控制显示页面
 const showStatus = ref(1)
+// 定义spu初始化的值
+const initSpu = (): SpuModel => ({
+  // id?: number,
+  spuName: '', // spu名称
+  description: '', // spu描述
+  category3Id: undefined, // 三级分类的id
+  tmId: undefined, // 品牌id
+  spuSaleAttrList: [], // spu销售属性列表
+  spuImageList: []  // spu图片列表
+})
+const spuInfo = ref<SpuModel>(initSpu())
+const changeSpuInfo = (row: SpuModel) => {
+  console.log('row', row);
+
+  spuInfo.value = row
+}
+
 </script>
 
 <style scoped>

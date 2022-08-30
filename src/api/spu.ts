@@ -65,5 +65,18 @@ export interface SpuPageModel {
 export default {
   getPage(page: number, limit: number, category3Id: number) {
     return request.get<any, SpuPageModel>(`/admin/product/${page}/${limit}?category3Id=${category3Id}`)
+  },
+  // 获取销售属性 - 新增展示下拉框
+  getSaleAttrList() {
+    return request.get<any, BaseSaleListModel>(`/admin/product/baseSaleAttrList`);
+  },
+  // 获取当前spu的图片列表
+  getSpuImageList(spuId: number) {
+    return request.get<any, SpuImageListModel>(`/admin/product/spuImageList/${spuId}`)
+  },
+  // 获取当前spu的销售列表
+  getSpuSaleAttrList(spuId: number) {
+    return request.get<any, SpuSaleAttrListModel>(`/admin/product/spuSaleAttrList/${spuId}`)
+
   }
 }

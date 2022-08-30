@@ -36,8 +36,6 @@ export default {
   getOne(id: number) {
     return request.get<any, trademarkModel>(`/admin/product/baseTrademark/get/${id}`)
   },
-
-
   //修改
   update(data: trademarkModel) {
     return request.put<any, null>('/admin/product/baseTrademark/update', data)
@@ -45,5 +43,9 @@ export default {
   // 删除
   remove(id: number) {
     return request.delete<any, null>(`/admin/product/baseTrademark/remove/${id}`)
+  },
+  // 新增展示下拉框数据
+  getList() {
+    return request.get<any, trademarkListModel>('/admin/product/baseTrademark/getTrademarkList')
   }
 }

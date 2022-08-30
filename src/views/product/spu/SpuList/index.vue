@@ -30,7 +30,8 @@ import spuApi, { type SpuListModel, type SpuModel } from '@/api/spu'
 import { useCategoryStore } from "@/stores/category";
 import { SPUSTATUS } from '../index.vue'
 const categoryStore = useCategoryStore()
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'spuInfo'])
+
 // 分页 数据初始化
 const page = ref(1);
 const limit = ref(3);
@@ -67,6 +68,27 @@ const handleSizeChange = (val: number) => {
   getPage()
 
 }
+
+// 点击编辑按钮  把当前要编辑的spu传给父组件,在让父组件传给 spuform
+
+const editSpu = (row: SpuModel) => {
+  emits('spuInfo', row)
+  emits('update:modelValue', SPUSTATUS.SPUFORM) // 切换界面的显示
+
+
+}
+
+const initSpuForm = () => ({
+  category3Id: undefined, // 保存之前再赋值
+  spuName: '', // spu名称
+  description: '', // 描述
+  tmId: undefined, // 品牌
+  spuSaleAttrList: [], // 销售属性列表
+  spuImageList: [] // 图片列表
+})
+const spuForm = ref<SpuModel>(initSpuForm()); // 新增-初始化数据
+
+
 
 watch(() => categoryStore.category3Id, (nval) => {
   if (!nval) {
