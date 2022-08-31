@@ -8,10 +8,10 @@
       <el-table-column property="description" label="SPU描述"></el-table-column>
       <el-table-column label="操作">
         <template #default="{ row, $index }">
-          <el-button type="success" :icon="Plus" size="small" title="新增SKU"></el-button>
+          <el-button type="success" :icon="Plus" size="small" title="新增SKU" @click="addSku(row)"></el-button>
           <el-button type="warning" :icon="Edit" size="small" title="修改SPU" @click="editSpu(row)"></el-button>
           <el-button type="info" :icon="InfoFilled" size="small" title="查看SKU列表"></el-button>
-          <el-button type="danger" :icon="Delete" size="small" title="删除SPU"></el-button>
+          <el-button type="danger" :icon="Delete" size="small" title="删除SPU" @click="delSpu(row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -53,6 +53,12 @@ const getPage = async () => {
 const addSpu = () => {
   emits("update:modelValue", SPUSTATUS.SPUFORM)
 }
+
+// 添加sku
+const addSku = (row: SpuModel) => {
+  emits("update:modelValue", SPUSTATUS.SKUFORM)
+  emits('spuInfo', row)
+}
 // 分页
 // 点击页码跳转
 const handleCurrentChange = (val: number) => {
@@ -72,6 +78,8 @@ const handleSizeChange = (val: number) => {
 // 点击编辑按钮  把当前要编辑的spu传给父组件,在让父组件传给 spuform
 
 const editSpu = (row: SpuModel) => {
+  console.log('点击啦');
+
   emits('spuInfo', row)
   emits('update:modelValue', SPUSTATUS.SPUFORM) // 切换界面的显示
 
@@ -88,7 +96,17 @@ const initSpuForm = () => ({
 })
 const spuForm = ref<SpuModel>(initSpuForm()); // 新增-初始化数据
 
+// 删除
+const delSpu = async (row: SpuModel) => {
+  try {
+    await spuApi.delete(row.id as number)
+    getPage()
+    ElMessage.success('删除成功')
+  } catch (error) {
+    ElMessage.error('删除失败')
+  }
 
+}
 
 watch(() => categoryStore.category3Id, (nval) => {
   if (!nval) {

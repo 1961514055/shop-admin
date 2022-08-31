@@ -1,10 +1,13 @@
 import request from '@/utils/request'
-// 用于销售属性下拉框类型
-export interface BaseSaleModel {
-  id: number,
-  name: string
-}
-export type BaseSaleListModel = BaseSaleModel[]
+
+// 获取spu分页数据           GET   /admin/product/${ page }/${ limit }?category3Id=${ category3Id }
+// 保存spu                  POST  /admin/product/saveSpuInfo
+// 获取销售属性列表          GET   /admin/product/baseSaleAttrList - 新增要调用
+// 获取品牌下拉列表          GET   /admin/product/baseTrademark/getTrademarkList - 这个接口写哪,写到trademark.ts中 - 新增要调用
+// 获取当前spu图片列表       GET   /admin/product/spuImageList/${ spuId } - 编辑的时候拿
+// 获取当前spu销售属性列表   GET   /admin/product/spuSaleAttrList/${ spuId } - 编辑的时候拿
+// 更新spu                  POST  /admin/product/updateSpuInfo
+// 删除spu                  DELETE /admin/product/deleteSpu/${ spuId }
 
 // 图片列表
 export interface SpuImageModel {
@@ -16,9 +19,20 @@ export interface SpuImageModel {
   name?: string, // 前端交互使用
   url?: string, // 前端交互使用
   response?: any, // 前端交互使用
+  isDefault: string // skuForm设置默认图片使用
 }
 export type SpuImageListModel = SpuImageModel[]
 
+
+// 用于销售属性下拉框类型
+export interface BaseSaleModel {
+  id: number,
+  name: string
+}
+export type BaseSaleListModel = BaseSaleModel[]
+
+
+// 销售属性值
 export interface SpuSaleAttrValueModel {
   id?: number,
   spuId?: number,
@@ -36,11 +50,13 @@ export interface SpuSaleAttrModel {
   spuId?: number,
   baseSaleAttrId: number, // 销售属性id
   saleAttrName: string, // 销售属性的name
-  spuSaleAttrValueList: SpuSaleAttrValueListModel
+  spuSaleAttrValueList: SpuSaleAttrValueListModel,
+  inputVisible?: boolean, // 前端交互使用
+  inputValue?: string, // 前端交互使用
+  attrIdValueId: string, // SkuForm中使用,收集两个id
 }
-
 export type SpuSaleAttrListModel = SpuSaleAttrModel[]
-//  spu信息
+
 export interface SpuModel {
   id?: number,
   spuName: string, // spu名称
@@ -50,9 +66,8 @@ export interface SpuModel {
   spuSaleAttrList: SpuSaleAttrListModel, // spu销售属性列表
   spuImageList: SpuImageListModel  // spu图片列表
 }
-// spu信息 数组
 export type SpuListModel = SpuModel[]
-// 查询分页返回值
+
 export interface SpuPageModel {
   records: SpuListModel,
   total: number,
@@ -61,10 +76,15 @@ export interface SpuPageModel {
   pages: number,
   searchCount: boolean, // 没用
 }
-// 获取分页列表数据
+
 export default {
+  // 获取分页
   getPage(page: number, limit: number, category3Id: number) {
     return request.get<any, SpuPageModel>(`/admin/product/${page}/${limit}?category3Id=${category3Id}`)
+  },
+  // 保存spu
+  saveSpu(spuInfo: SpuModel) {
+    return request.post<any, null>(`/admin/product/${spuInfo.id ? 'updateSpuInfo' : 'saveSpuInfo'}`, spuInfo);
   },
   // 获取销售属性 - 新增展示下拉框
   getSaleAttrList() {
@@ -77,6 +97,9 @@ export default {
   // 获取当前spu的销售列表
   getSpuSaleAttrList(spuId: number) {
     return request.get<any, SpuSaleAttrListModel>(`/admin/product/spuSaleAttrList/${spuId}`)
-
+  },
+  // 删除spu
+  delete(spuId: number) {
+    return request.delete<any, null>(`/admin/product/deleteSpu/${spuId}`)
   }
 }

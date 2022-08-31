@@ -3,13 +3,15 @@
     <!-- 三级级联 -->
     <el-card class="box-card mb-10">
       <div class="text item">
-        <CategorySelector></CategorySelector>
+        <CategorySelector :disabled="showStatus != SPUSTATUS.SPULIST"></CategorySelector>
       </div>
     </el-card>
     <!-- 表格信息 -->
     <el-card class="box-card">
-      <SpuList v-if="showStatus == SPUSTATUS.SPULIST" v-model="showStatus" @spuInfo="changeSpuInfo"></SpuList>
-      <SpuForm v-if="showStatus == SPUSTATUS.SPUFORM" v-model="showStatus" :spuInfo="spuInfo"></SpuForm>
+      <SpuList v-if="showStatus == SPUSTATUS.SPULIST" v-model="showStatus" @spuInfo="changeSpuInfo" />
+      <SpuForm v-if="showStatus == SPUSTATUS.SPUFORM" v-model="showStatus" :spuInfo="spuInfo"
+        @spuInfo="changeSpuInfo" />
+      <SkuForm v-if="showStatus == SPUSTATUS.SKUFORM" v-model="showStatus" :spuInfo="spuInfo" />
     </el-card>
   </div>
 </template>
@@ -26,6 +28,7 @@ export enum SPUSTATUS {
 import { ref } from "vue";
 import SpuList from "./SpuList/index.vue";
 import SpuForm from "./SpuForm/index.vue";
+import SkuForm from './SkuForm/index.vue'
 import type { SpuModel } from '@/api/spu'
 // 控制显示页面
 const showStatus = ref(1)
@@ -41,9 +44,11 @@ const initSpu = (): SpuModel => ({
 })
 const spuInfo = ref<SpuModel>(initSpu())
 const changeSpuInfo = (row: SpuModel) => {
-  console.log('row', row);
-
-  spuInfo.value = row
+  if (row) { //有值说明为修改
+    spuInfo.value = row
+  } else {
+    spuInfo.value = initSpu()
+  }
 }
 
 </script>
