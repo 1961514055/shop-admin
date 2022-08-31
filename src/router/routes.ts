@@ -9,7 +9,7 @@ import type { RouteRecordRaw } from 'vue-router';
  */
 
 /**
- * 静态路由（默认路由）
+ * 静态路由（默认路由）-放不需要筛选的路由,所有人都能看到的路由
  */
 export const staticRoutes: Array<RouteRecordRaw> = [
   {
@@ -44,11 +44,22 @@ export const staticRoutes: Array<RouteRecordRaw> = [
       }
     }]
   },
+
+
+];
+
+
+/**
+ * 定义动态路由 这个数组中放的路由是需要和用户信息中的权限进行筛选的
+ */
+export const allAsyncRoutes: Array<RouteRecordRaw> = [
   {
+    name: 'Product',
     path: '/product',
     component: () => import('@/layout/index.vue'),
     children: [
       {
+        name: 'Trademark',
         path: 'trademark/list',
         component: () => import('@/views/product/trademark/index.vue'),
         meta: {
@@ -57,6 +68,7 @@ export const staticRoutes: Array<RouteRecordRaw> = [
         }
       },
       {
+        name: 'Attr',
         path: 'attr/list',
         component: () => import('@/views/product/attr/index.vue'),
         meta: {
@@ -65,6 +77,7 @@ export const staticRoutes: Array<RouteRecordRaw> = [
         }
       },
       {
+        name: 'Spu',
         path: 'spu/list',
         component: () => import('@/views/product/spu/index.vue'),
         meta: {
@@ -73,6 +86,7 @@ export const staticRoutes: Array<RouteRecordRaw> = [
         }
       },
       {
+        name: 'Sku',
         path: 'sku/list',
         component: () => import('@/views/product/sku/index.vue'),
         meta: {
@@ -87,20 +101,17 @@ export const staticRoutes: Array<RouteRecordRaw> = [
 
     }
   },
-
-  /* 匹配任意的路由 必须最后注册 */
-  {
-    path: '/:pathMatch(.*)',
-    name: 'Any',
-    redirect: '/404',
-    meta: {
-      hidden: true
-    }
-  }
 ];
-
-
 /**
- * 定义动态路由
+ * 任意路由
  */
-export const allAsyncRoutes: Array<RouteRecordRaw> = [];
+export const anyRoute =
+/* 匹配任意的路由 必须最后注册 */
+{
+  path: '/:pathMatch(.*)',
+  name: 'Any',
+  redirect: '/404',
+  meta: {
+    hidden: true
+  }
+}
